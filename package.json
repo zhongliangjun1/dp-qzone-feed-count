@@ -10,6 +10,6 @@
     "hiredis": "*",
     "redis": "*",
     "schemajs": "*",
-    "ejs": "*"
+    "jade": "*"
   }
 }
