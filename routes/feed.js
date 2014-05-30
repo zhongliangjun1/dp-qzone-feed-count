@@ -25,6 +25,7 @@ var unreadFeedCount = function(req, res, responseType) {
             if (!err) {
                 wrapResponse(res, responseType, {"unreadFeedCount":feedIdSet.length});
             } else {
+                console.log(err);
                 wrapResponse(res, responseType, {"unreadFeedCount":unreadFeedCount});
             }
         });
