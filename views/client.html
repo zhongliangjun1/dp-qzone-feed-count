@@ -8,7 +8,7 @@
         $(function(){
 
             var get_jsonp = function() {  
-                $.getJSON("/jsonp/user/1023/feed/unreadcount?callback=?",
+                $.getJSON("/jsonp/user/1203/feed/unreadcount?callback=?",
                     function(data) {  
                         $('#rjsonp').val('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
                 });  
