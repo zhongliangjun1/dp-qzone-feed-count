@@ -1,5 +1,6 @@
 
 var redis = require("redis");
+var log = require("../log").log;
 
 var PORT = 6379;
 var HOST = '127.0.0.1';

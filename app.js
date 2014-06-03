@@ -7,12 +7,13 @@ var express = require('express')
   , routes = require('./routes')
   , feed = require('./routes/feed')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , log = require('./log').log;
 
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3002);
+  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -32,5 +33,5 @@ app.get('/json/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSON);
 app.get('/jsonp/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSONP);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+  log.info("Express server listening on port " + app.get('port'));
 });
