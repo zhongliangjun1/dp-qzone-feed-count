@@ -8,9 +8,10 @@
         $(function(){
 
             var get_jsonp = function() {  
-                $.getJSON("/jsonp/user/1203/feed/unreadcount?callback=?",
+                var openId = $('#rjsonp').val();
+                $.getJSON('/jsonp/user/'+openId+'/feed/unreadcount?callback=?',
                     function(data) {  
-                        $('#rjsonp').val('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
+                        $('#show').text('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
                 });  
             };
 
@@ -23,7 +24,10 @@
     </script>  
 </head>  
 <body>  
-    <a id="test" href="#">Click me for jsonp</a><br />  
-    <textarea id="rjsonp" cols="50" rows="3"></textarea>  
+    <!-- <a id="test" href="#">Click me for jsonp</a><br />   -->
+    <div>input user openId for test</div>
+    <div><textarea id="rjsonp" cols="50" rows="3"></textarea></div>
+    <div><button id="test">test</button></div>
+    <div id="show"></div>
 </body>  
 </html>  
