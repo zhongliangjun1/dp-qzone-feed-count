@@ -10,6 +10,7 @@ var log = bunyan.createLogger({
     },
     {
       level: 'error',
+      type: 'rotating-file',
       path: '/data/applogs/dp-qzone-feed-count/logs/app.log',  // log ERROR and above to a file
       period: '1d',   // daily rotation
       count: 14        // keep 14 back copies
