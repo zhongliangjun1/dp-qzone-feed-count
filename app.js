@@ -32,6 +32,11 @@ app.get('/', routes.index);
 app.get('/json/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSON);
 app.get('/jsonp/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSONP);
 
-http.createServer(app).listen(app.get('port'), function(){
-  log.info("Express server listening on port " + app.get('port'));
+http.createServer(app).listen(app.get('port'), function(err){
+  if (!err) {
+    log.info("Express server listening on port " + app.get('port'));
+  } else {
+    log.error(err, "start failure");
+  }
+  
 });

@@ -7,11 +7,11 @@ var HOST = '127.0.0.1';
 var client = redis.createClient(PORT,HOST);
 
 client.on("error", function (err) {
-    console.log("error event - " + client.host + ":" + client.port + " - " + err);
+    log.error("error event - " + client.host + ":" + client.port + " - " + err);
 });
 
 client.on("connect", function () {
-    console.log("success connect to " + HOST + ":" + PORT );
+    log.info("success connect to " + HOST + ":" + PORT );
 });
 
 
@@ -26,7 +26,7 @@ var unreadFeedCount = function(req, res, responseType) {
             if (!err) {
                 wrapResponse(res, responseType, {"unreadFeedCount":feedIdSet.length});
             } else {
-                console.log(err);
+                log.error(err);
                 wrapResponse(res, responseType, {"unreadFeedCount":unreadFeedCount});
             }
         });

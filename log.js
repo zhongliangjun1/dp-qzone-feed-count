@@ -2,7 +2,7 @@
 var bunyan = require('bunyan');
 
 var log = bunyan.createLogger({
-  name: 'myapp',
+  name: 'dp-qzone-feed-count',
   streams: [
     {
       level: 'info',
@@ -10,7 +10,9 @@ var log = bunyan.createLogger({
     },
     {
       level: 'error',
-      path: '/data/applogs/dp-qzone-feed-count/logs/app.log'  // log ERROR and above to a file
+      path: '/data/applogs/dp-qzone-feed-count/logs/app.log',  // log ERROR and above to a file
+      period: '1d',   // daily rotation
+      count: 14        // keep 14 back copies
     }
   ]
 });
