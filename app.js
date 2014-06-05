@@ -12,6 +12,11 @@ var express = require('express')
 
 var app = express();
 
+// print process.argv
+process.argv.forEach(function(val, index, array) {
+  console.log(index + ': ' + val);
+});
+
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
