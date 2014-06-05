@@ -1,18 +1,59 @@
 
 var redis = require("redis");
 var log = require("../log").log;
+var request = require("request");
 
 var PORT = 6379;
 var HOST = '127.0.0.1';
-var client = redis.createClient(PORT,HOST);
+var client = null;
+var clientIsOK = false;
 
-client.on("error", function (err) {
-    log.error("error event - " + client.host + ":" + client.port + " - " + err);
-});
+// export NODE_ENV=production|development
+// export NODE_DP_ENV=dev|alpha|qa|ppe|product
+var env = process.env.NODE_DP_ENV;
+if (!env) {
+    env = 'product';
+};
+log.info('now NODE_DP_ENV is '+env);
 
-client.on("connect", function () {
-    log.info("success connect to " + HOST + ":" + PORT );
-});
+var createClient = function(){
+    var url = "http://lion.dp:8080/getconfig?e="+env+"&k=dp-qzone-index-web.redis1.ip";
+    request({
+            url: url,
+            method: "GET"
+        }, function(error, response, body) {
+            if (!error) {
+                HOST = body;
+                if ( isIP(HOST) ) {
+                    client = redis.createClient(PORT,HOST);
+
+                    client.on("error", function (err) {
+                        log.error("error event - " + client.host + ":" + client.port + " - " + err);
+                    });
+
+                    client.on("connect", function () {
+                        clientIsOK = true;
+                        log.info("success connect to " + HOST + ":" + PORT );
+                    });
+                } else {
+                    log.error('can not get effective redis HOST with the url : '+url);
+                }                
+            } else {
+                log.error(error, 'can not get redis config with the url %s', url);
+            }
+        }
+    )
+}
+createClient();
+
+var isIP = function(str){
+    var result = false;
+    if (str) {
+        var s = str.replace(/\./g,'');
+        result = !isNaN(s);
+    };
+    return result;
+}
 
 
 
@@ -20,7 +61,7 @@ var unreadFeedCount = function(req, res, responseType) {
 
 	var openId = req.params.openId;
     var unreadFeedCount = 0;
-	if (openId) {
+	if (openId && clientIsOK) {
         var key = "user:"+openId+":unread:feedIds";
         client.smembers(key, function(err, feedIdSet){
             if (!err) {

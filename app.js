@@ -12,12 +12,6 @@ var express = require('express')
 
 var app = express();
 
-// print process.argv
-log.error('test--------');
-process.argv.forEach(function(val, index, array) {
-  log.error(index + ': ' + val);
-});
-
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
