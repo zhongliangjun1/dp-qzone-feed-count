@@ -13,6 +13,7 @@ var express = require('express')
 var app = express();
 
 // print process.argv
+log.error('test--------');
 process.argv.forEach(function(val, index, array) {
   log.error(index + ': ' + val);
 });
