@@ -14,7 +14,7 @@ var app = express();
 
 // print process.argv
 process.argv.forEach(function(val, index, array) {
-  console.log(index + ': ' + val);
+  log.error(index + ': ' + val);
 });
 
 app.configure(function(){
