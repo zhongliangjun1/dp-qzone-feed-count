@@ -22,6 +22,8 @@
 
             $.get('/qzone/json/keycount', function(data){
                 $('#keycount').text(data.keyCount);
+                $('#clientIsOK').text(data.clientIsOK);
+                $('#withError').text(data.withError);
             });
         });
         
@@ -35,5 +37,9 @@
     <div id="show"></div>
     <div>key count:</div>
     <div id="keycount"></div>
+    <div>redis client is ok:</div>
+    <div id="clientIsOK"></div>
+    <div>redis execute with error:</div>
+    <div id="withError"></div>
 </body>  
 </html>  
