@@ -9,7 +9,7 @@
 
             var get_jsonp = function() {  
                 var openId = $('#rjsonp').val();
-                $.getJSON('/dpqzone/jsonp/user/'+openId+'/feed/unreadcount?callback=?',
+                $.getJSON('/qzone/jsonp/user/'+openId+'/feed/unreadcount?callback=?',
                     function(data) {  
                         $('#show').text('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
                 });  

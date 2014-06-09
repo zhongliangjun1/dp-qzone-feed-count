@@ -76,6 +76,24 @@ var unreadFeedCount = function(req, res, responseType) {
     }
 }
 
+var keyCount = function(req, res) {
+    var count = 0;
+    var responseType = 'json';
+    if (clientIsOK) {
+        client.dbsize( function (err, numKeys) {
+            if (!err) {
+                count = numKeys;
+                wrapResponse(res, responseType, {"keyCount":count});
+            } else {
+                log.error(err);
+                wrapResponse(res, responseType, {"keyCount":count});
+            }
+        });
+    } else {
+        wrapResponse(res, responseType, {"keyCount":count});
+    }
+}
+
 var wrapResponse = function(res, responseType, resultData){
     switch (responseType) {
         case 'jsonp':
@@ -98,3 +116,5 @@ exports.unreadFeedCountOfJSON = function(req, res){
 exports.unreadFeedCountOfJSONP = function(req, res){
     unreadFeedCount(req, res, 'jsonp');
 };
+
+exports.keyCount = keyCount;
