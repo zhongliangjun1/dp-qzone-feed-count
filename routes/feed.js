@@ -83,14 +83,14 @@ var keyCount = function(req, res) {
         client.dbsize( function (err, numKeys) {
             if (!err) {
                 count = numKeys;
-                wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'n'});
+                wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'n', "env":env});
             } else {
                 log.error(err);
-                wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'y'});
+                wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'y', "env":env});
             }
         });
     } else {
-        wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'y'});
+        wrapResponse(res, responseType, {"keyCount":count, "clientIsOK":clientIsOK, "withError":'y', "env":env});
     }
 }
 
