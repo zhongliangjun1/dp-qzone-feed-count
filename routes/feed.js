@@ -14,7 +14,7 @@ var env = process.env.NODE_DP_ENV;
 if (!env) {
     env = 'product';
 };
-log.info('now NODE_DP_ENV is '+env);
+log.warn('now NODE_DP_ENV is '+env);
 
 var createClient = function(){
     var url = "http://lion.dp:8080/getconfig?e="+env+"&k=dp-qzone-index-web.redis1.ip";
