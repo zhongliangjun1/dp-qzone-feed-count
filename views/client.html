@@ -19,6 +19,10 @@
                 console.log('begin test');
                 get_jsonp();
             });
+
+            $.get('/qzone/json/keycount', function(data){
+                $('#keycount').text(data.keyCount);
+            });
         });
         
     </script>  
@@ -29,5 +33,7 @@
     <div><textarea id="rjsonp" cols="50" rows="3"></textarea></div>
     <div><button id="test">test</button></div>
     <div id="show"></div>
+    <div>key count:</div>
+    <div id="keycount"></div>
 </body>  
 </html>  
