@@ -12,7 +12,7 @@ var clientIsOK = false;
 // export NODE_DP_ENV=dev|alpha|qa|ppe|product
 var env = process.env.NODE_DP_ENV;
 if (!env) {
-    env = 'ppe';
+    env = 'product';
 };
 log.warn('now NODE_DP_ENV is '+env);
 
