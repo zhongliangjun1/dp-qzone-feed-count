@@ -9,7 +9,7 @@ var client = null;
 var clientIsOK = false;
 
 // export NODE_ENV=production|development
-// export NODE_DP_ENV=dev|alpha|qa|ppe|product
+// export NODE_DP_ENV=dev|alpha|qa|prelease|product
 var env = process.env.NODE_DP_ENV;
 if (!env) {
     env = 'prelease';
