@@ -140,7 +140,7 @@ var getUnreadFeedCountByCode = function(req, res, responseType) {
 
 
 
-var unreadFeedCount = function(req, res, responseType) {
+var getUnreadFeedCountByOpenId = function(req, res, responseType) {
 
 	var openId = req.params.openId;
     var unreadFeedCount = 0;
@@ -192,12 +192,12 @@ var wrapResponse = function(res, responseType, resultData){
 }
 
 
-exports.unreadFeedCountOfJSON = function(req, res){
-    unreadFeedCount(req, res, 'json');
+exports.getUnreadFeedCountByOpenIdOfJSON = function(req, res){
+    getUnreadFeedCountByOpenId(req, res, 'json');
 };
 
-exports.unreadFeedCountOfJSONP = function(req, res){
-    unreadFeedCount(req, res, 'jsonp');
+exports.getUnreadFeedCountByOpenIdOfJSONP = function(req, res){
+    getUnreadFeedCountByOpenId(req, res, 'jsonp');
 };
 
 exports.keyCount = keyCount;

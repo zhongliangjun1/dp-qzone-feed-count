@@ -29,14 +29,14 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/qzone/json/openId/:openId/feed/unreadcount', feed.unreadFeedCountOfJSON);
-//app.get('/qzone/jsonp/openId/:openId/feed/unreadcount', feed.unreadFeedCountOfJSONP);
+app.get('/qzone/json/openId/:openId/feed/unreadcount', feed.getUnreadFeedCountByOpenIdOfJSON);
+//app.get('/qzone/jsonp/openId/:openId/feed/unreadcount', feed.getUnreadFeedCountByOpenIdOfJSONP);
 app.get('/qzone/jsonp/user/:code/feed/unreadcount', feed.getUnreadFeedCountByCodeOfJSONP);
 app.get('/qzone/json/keycount', feed.keyCount); 
 
 http.createServer(app).listen(app.get('port'), function(err){
   if (!err) {
-    log.info("Express server listening on port " + app.get('port'));
+    log.warn("Express server listening on port " + app.get('port'));
   } else {
     log.error(err, "start failure");
   }
