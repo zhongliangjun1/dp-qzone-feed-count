@@ -8,8 +8,8 @@
         $(function(){
 
             var get_jsonp = function() {  
-                var openId = $('#rjsonp').val();
-                $.getJSON('/qzone/jsonp/user/'+openId+'/feed/unreadcount?callback=?',
+                var code = $('#rjsonp').val();
+                $.getJSON('/qzone/jsonp/user/'+code+'/feed/unreadcount?callback=?',
                     function(data) {  
                         $('#show').text('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
                 });  
@@ -32,7 +32,7 @@
 </head>  
 <body>  
     <!-- <a id="test" href="#">Click me for jsonp</a><br />   -->
-    <div>input user openId for test</div>
+    <div>input user code for test</div>
     <div><textarea id="rjsonp" cols="50" rows="3"></textarea></div>
     <div><button id="test">test</button></div>
     <div id="show"></div>
