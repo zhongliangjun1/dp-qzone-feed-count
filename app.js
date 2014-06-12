@@ -29,8 +29,9 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-//app.get('/json/qzone/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSON);
-app.get('/qzone/jsonp/user/:openId/feed/unreadcount', feed.unreadFeedCountOfJSONP);
+app.get('/qzone/json/openId/:openId/feed/unreadcount', feed.unreadFeedCountOfJSON);
+//app.get('/qzone/jsonp/openId/:openId/feed/unreadcount', feed.unreadFeedCountOfJSONP);
+app.get('/qzone/jsonp/user/:code/feed/unreadcount', feed.unreadFeedCountOfJSONP);
 app.get('/qzone/json/keycount', feed.keyCount); 
 
 http.createServer(app).listen(app.get('port'), function(err){

@@ -2,6 +2,7 @@
 var redis = require("redis");
 var log = require("../log").log;
 var request = require("request");
+var async = require("async");
 
 var PORT = 6379;
 var HOST = '127.0.0.1';
@@ -54,6 +55,87 @@ var isIP = function(str){
         result = !isNaN(s);
     };
     return result;
+}
+
+
+var getUnreadFeedCountByCode = function(req, res, responseType) {
+    var code = req.params.code;
+    if (code && clientIsOK) {
+
+        async.waterfall([
+            function(callback){
+
+                request(
+                    {
+                        url: 'https://graph.qq.com/oauth2.0/token',
+                        form: {
+                            'client_id':200002,
+                            'client_secret':'44af9cac039c4c07b6ea5a7fabec1c31',
+                            'grant_type':'authorization_code',
+                            'redirect_uri':'http://www.dianping.com/authlogin', //重定向URL
+                            'code':code
+                        },
+                        method: "POST"
+                    }, function(error, response, body) {
+                        var accessToken = null;
+                        if(!error){
+                            if (body.indexOf('access_token')>=0) {
+                                var array = body.split('&');
+                                accessToken = array[0].replace('access_token=', '');
+                            } else {
+                                error = new Error(body);
+                            }
+                        }
+                        callback(error, accessToken);
+                    }
+                );
+
+            },
+            function(accessToken, callback){
+
+                request(
+                    {
+                        url: 'https://graph.qq.com/oauth2.0/me?access_token='+accessToken,
+                        method: "GET"
+                    }, function(error, response, body) {
+                        var openId = null;
+                        if (!error) {
+                            if (body.indexOf('openid')>=0) {
+                                openId = body.split(":")[2].replace('"} );', '').replace('"', '');
+                            } else {
+                                error = new Error(body);
+                            }
+                        }
+                        callback(error, openId);
+                    }
+                );
+
+            },
+            function(openId, callback){
+
+                var unreadFeedCount = 0;
+                var key = "user:"+openId+":unread:feedIds";
+                client.smembers(key, function(error, feedIdSet){
+                    if (!error) {
+                        unreadFeedCount = feedIdSet.length;
+                    }
+                    callback(error, unreadFeedCount);
+                });
+
+            }
+        ], function (error, unreadFeedCount) {
+
+            if (error) {
+                log.error(error);
+                unreadFeedCount = 0;
+            }
+            wrapResponse(res, responseType, {"unreadFeedCount":unreadFeedCount});
+
+        });
+
+    } else {
+        wrapResponse(res, responseType, {"unreadFeedCount":0});
+    }
 }
 
 
@@ -119,3 +201,7 @@ exports.unreadFeedCountOfJSONP = function(req, res){
 };
 
 exports.keyCount = keyCount;
+
+exports.getUnreadFeedCountByCodeOfJSONP = function(req, res){
+    getUnreadFeedCountByCode(req, res, 'jsonp');
+}

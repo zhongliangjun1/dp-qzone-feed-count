@@ -12,6 +12,7 @@
     "redis": "*",
     "schemajs": "*",
     "jade": "*",
-    "bunyan": "*"
+    "bunyan": "*",
+    "async": "*"
   }
 }
