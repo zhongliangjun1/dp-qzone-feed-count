@@ -11,7 +11,7 @@
                 var code = $('#rjsonp').val();
                 $.getJSON('/qzone/jsonp/user/'+code+'/feed/unreadcount?callback=?',
                     function(data) {  
-                        $('#show').text('Jsonp info : unreadFeedCount=' + data.unreadFeedCount);  
+                        $('#show').text('Jsonp info : unreadFeedCount=' + data.date.result + ' and message='+data.message);
                 });  
             };
 

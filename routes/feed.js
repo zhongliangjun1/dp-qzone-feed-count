@@ -129,13 +129,35 @@ var getUnreadFeedCountByCode = function(req, res, responseType) {
                 log.error(error);
                 unreadFeedCount = 0;
             }
-            wrapResponse(res, responseType, {"unreadFeedCount":unreadFeedCount});
+            sendQzoneResponse(res, responseType, unreadFeedCount);
 
         });
 
     } else {
-        wrapResponse(res, responseType, {"unreadFeedCount":0});
+        sendQzoneResponse(res, responseType, 0);
     }
+}
+
+var sendQzoneResponse = function(res, responseType, unreadFeedCount) {
+    var result;
+    if (unreadFeedCount>0) {
+        result = {
+            "code": 0,
+            "message": "吃喝玩乐出红点+数字",
+            "data": {
+                "result": '"'+unreadFeedCount+'"'
+            }
+        }
+    } else {
+        result = {
+            "code": 0,
+            "message": "不出红点",
+            "data": {
+                "result": "null"
+            }
+        }
+    }
+    wrapResponse(res, responseType, result);
 }
 
 
